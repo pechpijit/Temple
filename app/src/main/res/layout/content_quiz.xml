@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.sdu.tample.QuizActivity"
+    tools:showIn="@layout/activity_quiz">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="100dp"
+        android:alpha="0.3"
+        android:src="@drawable/logo" />
+   <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <ProgressBar
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/view_load"
+           android:layout_gravity="center"
+           android:visibility="invisible" />
+
+       <LinearLayout
+           android:orientation="vertical"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:visibility="invisible"
+           android:id="@+id/view_ans">
+
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="คะแนน"
+               android:textColor="@color/menu2"
+               android:id="@+id/textView"
+               android:textAlignment="center"
+               android:textSize="60dp"
+               android:textStyle="bold"
+               android:layout_marginTop="30dp"
+               android:textIsSelectable="false" />
+           <TextView
+               android:layout_marginTop="150dp"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="100 %"
+               android:textColor="@color/menu2"
+               android:id="@+id/txt_sum"
+               android:textAlignment="center"
+               android:textSize="60dp"
+               android:textStyle="bold"
+               android:textIsSelectable="false" />
+       </LinearLayout>
+
+       <ImageView
+           android:layout_width="150dp"
+           android:layout_height="220dp"
+           android:layout_weight="1"
+           android:layout_gravity="bottom|right"
+           android:src="@drawable/boy"
+           android:id="@+id/ic_toon1"
+           android:visibility="invisible" />
+       <mehdi.sakout.fancybuttons.FancyButton
+           android:id="@+id/btn_finish"
+           android:layout_width="150dp"
+           android:layout_height="50dp"
+           android:paddingBottom="10dp"
+           android:paddingLeft="20dp"
+           android:paddingRight="20dp"
+           android:paddingTop="10dp"
+           fancy:fb_iconPaddingRight="10dp"
+           fancy:fb_defaultColor="@color/colorPrimary"
+           fancy:fb_focusColor="@color/colorPrimary2"
+           fancy:fb_radius="30dp"
+           fancy:fb_text="เสร็จสิ้น"
+           android:textSize="20dp"
+           android:textStyle="bold"
+           fancy:fb_textColor="@color/white"
+           android:layout_gravity="bottom|center_horizontal"
+           android:layout_marginBottom="10dp"
+           android:visibility="invisible" />
+       <ImageView
+           android:layout_width="150dp"
+           android:layout_height="220dp"
+           android:layout_weight="1"
+           android:layout_gravity="left|bottom"
+           android:src="@drawable/girl"
+           android:id="@+id/ic_toon2"
+           android:visibility="invisible" />
+
+   </FrameLayout>
+    <LinearLayout
+        android:layout_margin="16dp"
+        android:visibility="invisible"
+        android:id="@+id/quiz"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:textColor="@color/menu2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. ศีลจะมีหลายความหมาย แต่ที่สำคัญที่สุดหมายความว่าอย่างไร "
+                android:id="@+id/txt_quiz"
+                android:textStyle="bold"
+                android:textSize="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="20dp" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btn_ans1"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    fancy:fb_defaultColor="@color/colorPrimary"
+                    fancy:fb_focusColor="@color/colorPrimary2"
+                    fancy:fb_iconPaddingRight="10dp"
+                    fancy:fb_radius="30dp"
+                    fancy:fb_text="เริ่มจับเวลา"
+                    fancy:fb_textColor="@color/white" />
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btn_ans2"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    fancy:fb_defaultColor="@color/colorPrimary"
+                    fancy:fb_focusColor="@color/colorPrimary2"
+                    fancy:fb_iconPaddingRight="10dp"
+                    fancy:fb_radius="30dp"
+                    fancy:fb_text="เริ่มจับเวลา"
+                    fancy:fb_textColor="@color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btn_ans3"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    fancy:fb_defaultColor="@color/colorPrimary"
+                    fancy:fb_focusColor="@color/colorPrimary2"
+                    fancy:fb_iconPaddingRight="10dp"
+                    fancy:fb_radius="30dp"
+                    fancy:fb_text="เริ่มจับเวลา"
+                    fancy:fb_textColor="@color/white" />
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btn_ans4"
+                    android:layout_width="150dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:paddingTop="10dp"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    fancy:fb_defaultColor="@color/colorPrimary"
+                    fancy:fb_focusColor="@color/colorPrimary2"
+                    fancy:fb_iconPaddingRight="10dp"
+                    fancy:fb_radius="30dp"
+                    fancy:fb_text="เริ่มจับเวลา"
+                    fancy:fb_textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
