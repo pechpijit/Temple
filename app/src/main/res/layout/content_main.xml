@@ -23,14 +23,6 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="100dp"
-                android:alpha="0.3"
-                android:src="@drawable/logo" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -40,7 +32,7 @@
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="5dp">
 
                     <LinearLayout
                         android:orientation="vertical"
@@ -58,11 +50,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="พระ ๙ วัด"
+                            android:text="ไหว้พระ 9 วัด"
                             android:id="@+id/textView2"
                             android:layout_gravity="center_horizontal"
                             android:textStyle="bold"
-                            android:textSize="20dp"
+                            android:textSize="24dp"
                             android:layout_marginTop="3dp"
                             android:textColor="@color/menu2" />
                     </LinearLayout>
@@ -87,7 +79,7 @@
                             android:id="@+id/textView3"
                             android:layout_gravity="center_horizontal"
                             android:textStyle="bold"
-                            android:textSize="20dp"
+                            android:textSize="24dp"
                             android:layout_marginTop="3dp"
                             android:textColor="@color/menu2" />
                     </LinearLayout>
@@ -119,7 +111,7 @@
                             android:id="@+id/textView4"
                             android:layout_gravity="center_horizontal"
                             android:textStyle="bold"
-                            android:textSize="20dp"
+                            android:textSize="24dp"
                             android:layout_marginTop="3dp"
                             android:textColor="@color/menu2" />
                     </LinearLayout>
@@ -140,11 +132,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ยานพาหนะ"
+                            android:text="เช่ายานพาหนะ"
                             android:id="@+id/textView5"
                             android:layout_gravity="center_horizontal"
                             android:textStyle="bold"
-                            android:textSize="20dp"
+                            android:textSize="24dp"
                             android:layout_marginTop="3dp"
                             android:textColor="@color/menu2" />
                     </LinearLayout>
@@ -176,7 +168,7 @@
                             android:id="@+id/textView6"
                             android:layout_gravity="center_horizontal"
                             android:textStyle="bold"
-                            android:textSize="20dp"
+                            android:textSize="24dp"
                             android:layout_marginTop="3dp"
                             android:textColor="@color/menu2" />
                     </LinearLayout>
@@ -201,7 +193,7 @@
                             android:id="@+id/textView7"
                             android:layout_gravity="center_horizontal"
                             android:textStyle="bold"
-                            android:textSize="20dp"
+                            android:textSize="24dp"
                             android:layout_marginTop="3dp"
                             android:textColor="@color/menu2" />
                     </LinearLayout>

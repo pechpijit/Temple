@@ -6,6 +6,11 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.sdu.tample.model.ModelTemple;
+import com.sdu.tample.model.ModelTempleDetail;
+
 import java.io.IOException;
 
 import okhttp3.MediaType;
@@ -15,7 +20,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ConnectAPI {
-    String URL = "http://10.210.79.217:9999";
+    String URL = "http://192.168.1.50/temple/public";
 
     public void getTempleAll(final Context mContext) {
         new AsyncTask<Void, Void, String>() {
@@ -52,6 +57,7 @@ public class ConnectAPI {
                     dialogErrorNoIntent(mContext, string);
                 } else {
                     ((KaowatActivity) mContext).setAdap(string,URL);
+
                 }
             }
         }.execute();
@@ -413,6 +419,7 @@ public class ConnectAPI {
                     dialogErrorNoIntent(mContext, string);
                 } else {
                     ((TempleActivity) mContext).setView(string, URL);
+//                    new GsonBuilder().create().toJson(new Gson().fromJson(string, ModelTempleDetail.class))
                 }
             }
         }.execute();

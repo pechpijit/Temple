@@ -20,14 +20,6 @@
        <FrameLayout
            android:layout_width="match_parent"
            android:layout_height="match_parent">
-           <ImageView
-               android:id="@+id/imageView"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:layout_gravity="center"
-               android:layout_margin="100dp"
-               android:alpha="0.3"
-               android:src="@drawable/logo" />
            <android.support.v7.widget.RecyclerView
                android:id="@+id/dummyfrag_scrollableview"
                android:layout_width="match_parent"

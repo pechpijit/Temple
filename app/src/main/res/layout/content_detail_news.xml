@@ -9,15 +9,6 @@
     tools:context=".DetailVehicleActivity"
     tools:showIn="@layout/activity_detail_news">
 
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_gravity="center"
-        android:alpha="0.3"
-        android:src="@drawable/logo" />
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">

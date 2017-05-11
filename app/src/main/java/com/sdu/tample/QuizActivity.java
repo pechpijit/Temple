@@ -131,28 +131,28 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_ans1:
-                if (posts.get(index).getAns().get(0).getAnswerDetail().length() > 20) {
+                if (posts.get(index).getAns().get(0).getAnswerDetail().length() > 10) {
                     dialogAnsert(1);
                 } else {
                     setAnswer(1);
                 }
                 break;
             case R.id.btn_ans2:
-                if (posts.get(index).getAns().get(1).getAnswerDetail().length() > 20) {
+                if (posts.get(index).getAns().get(1).getAnswerDetail().length() > 10) {
                     dialogAnsert(2);
                 } else {
                     setAnswer(2);
                 }
                 break;
             case R.id.btn_ans3:
-                if (posts.get(index).getAns().get(2).getAnswerDetail().length() > 20) {
+                if (posts.get(index).getAns().get(2).getAnswerDetail().length() > 10) {
                     dialogAnsert(3);
                 } else {
                     setAnswer(3);
                 }
                 break;
             case R.id.btn_ans4:
-                if (posts.get(index).getAns().get(3).getAnswerDetail().length() > 20) {
+                if (posts.get(index).getAns().get(3).getAnswerDetail().length() > 10) {
                     dialogAnsert(4);
                 } else {
                     setAnswer(4);
@@ -170,23 +170,23 @@ public class QuizActivity extends AppCompatActivity implements View.OnClickListe
         if (index < 5) {
             txt_title.setText("ข้อ " + (index + 1));
             txt_quiz.setText(posts.get(index).getQuiz().getQuizTopic());
-            if (posts.get(index).getAns().get(0).getAnswerDetail().length() > 20) {
-                btn_ans1.setText(posts.get(index).getAns().get(0).getAnswerDetail().substring(0, 20)+"...\n(กดดูเพิ่มเติม)");
+            if (posts.get(index).getAns().get(0).getAnswerDetail().length() > 10) {
+                btn_ans1.setText(posts.get(index).getAns().get(0).getAnswerDetail().substring(0, 10)+"...\n(เพิ่มเติม)");
             } else {
                 btn_ans1.setText(posts.get(index).getAns().get(0).getAnswerDetail());
             }
-            if (posts.get(index).getAns().get(1).getAnswerDetail().length() > 20) {
-                btn_ans2.setText(posts.get(index).getAns().get(1).getAnswerDetail().substring(0,20)+"...\n(กดดูเพิ่มเติม)");
+            if (posts.get(index).getAns().get(1).getAnswerDetail().length() > 10) {
+                btn_ans2.setText(posts.get(index).getAns().get(1).getAnswerDetail().substring(0,10)+"...\n(เพิ่มเติม)");
             }else {
                 btn_ans2.setText(posts.get(index).getAns().get(1).getAnswerDetail());
             }
-            if (posts.get(index).getAns().get(2).getAnswerDetail().length() > 20) {
-                btn_ans3.setText(posts.get(index).getAns().get(2).getAnswerDetail().substring(0,20)+"...\n(กดดูเพิ่มเติม)");
+            if (posts.get(index).getAns().get(2).getAnswerDetail().length() > 10) {
+                btn_ans3.setText(posts.get(index).getAns().get(2).getAnswerDetail().substring(0,10)+"...\n(เพิ่มเติม)");
             }else {
                 btn_ans3.setText(posts.get(index).getAns().get(2).getAnswerDetail());
             }
-            if (posts.get(index).getAns().get(3).getAnswerDetail().length() > 20) {
-                btn_ans4.setText(posts.get(index).getAns().get(3).getAnswerDetail().substring(0,20)+"...\n(กดดูเพิ่มเติม)");
+            if (posts.get(index).getAns().get(3).getAnswerDetail().length() > 10) {
+                btn_ans4.setText(posts.get(index).getAns().get(3).getAnswerDetail().substring(0,10)+"...\n(เพิ่มเติม)");
             }else {
                 btn_ans4.setText(posts.get(index).getAns().get(3).getAnswerDetail());
             }

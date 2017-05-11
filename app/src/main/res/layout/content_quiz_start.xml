@@ -48,7 +48,7 @@
             fancy:fb_focusColor="@color/colorPrimary2"
             fancy:fb_radius="30dp"
             fancy:fb_text="เริ่มจับเวลา"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold"
             fancy:fb_textColor="@color/white"
             android:layout_margin="5dp"
