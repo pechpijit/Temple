@@ -6,6 +6,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.sdu.tample.model.ModelTemple;
@@ -103,7 +104,7 @@ public class ConnectAPI {
         }.execute();
     }
 
-    public void getActivitiesSearch(final Context mContext, final int[] id) {
+    public void getActivitiesSearch(final Context mContext, final String id) {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
@@ -140,7 +141,7 @@ public class ConnectAPI {
                 if (temp[0].equals("Error") || temp[0].equals("Not")) {
                     dialogErrorNoIntent(mContext, string);
                 } else {
-                    ((VehicleActivity) mContext).setAdap(string,URL);
+                    ((KaowatActivity2) mContext).setAdap(string,URL);
                 }
             }
         }.execute();
@@ -226,6 +227,45 @@ public class ConnectAPI {
         }.execute();
     }
 
+    public void getLitaniesId(final Context mContext, final int id) {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... voids) {
+                OkHttpClient client = new OkHttpClient();
+
+                Request request = new Request.Builder()
+                        .url(URL + "/api/litanies/"+id)
+                        .get()
+                        .addHeader("cache-control", "no-cache")
+                        .build();
+
+                try {
+                    Response response = client.newCall(request).execute();
+                    if (response.isSuccessful()) {
+                        return response.body().string();
+                    } else {
+                        return "Not Success - code : " + response.code();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return "Error - " + e.getMessage();
+                }
+            }
+
+            @Override
+            protected void onPostExecute(String string) {
+                super.onPostExecute(string);
+                Log.d("ConnectAPI : ", "getLitaniesId " + string);
+                String[] temp = string.split(" ");
+                if (temp[0].equals("Error") || temp[0].equals("Not")) {
+                    dialogErrorNoIntent(mContext, string);
+                } else {
+                    ((TempleActivity) mContext).dialog_(string);
+                }
+            }
+        }.execute();
+    }
+
     public void getNewsId(final Context mContext, final int id) {
         new AsyncTask<Void, Void, String>() {
             @Override
@@ -304,6 +344,48 @@ public class ConnectAPI {
                 }
             }
         }.execute();
+    }
+
+    public void getHotAll(final Context mContext, final GoogleMap mMap) {
+
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... voids) {
+                OkHttpClient client = new OkHttpClient();
+
+                Request request = new Request.Builder()
+                        .url(URL+"/api/hot")
+                        .get()
+                        .addHeader("cache-control", "no-cache")
+                        .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
+                        .build();
+
+                try {
+                    Response response = client.newCall(request).execute();
+                    if (response.isSuccessful()) {
+                        return response.body().string();
+                    } else {
+                        return "Not Success - code : " + response.code();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return "Error - " + e.getMessage();
+                }
+            }
+
+            @Override
+            protected void onPostExecute(String string) {
+                super.onPostExecute(string);
+                Log.d("ConnectAPI : ", "getQuizAll " + string);
+                String[] temp = string.split(" ");
+                if (temp[0].equals("Error") || temp[0].equals("Not")) {
+                    dialogErrorNoIntent(mContext, string);
+                } else {
+                    ((MapHotActivity) mContext).addMarker(mMap,string);
+                }
+            }
+        }.execute();
+
     }
 
     public void getActivitiesAll(final Context mContext) {

@@ -32,7 +32,7 @@ public class ActivitiesActivity extends AppCompatActivity {
     Context mContext;
     FancyButton btn_search;
     public int[] activitie;
-    int[] search;
+    String[] search;
     int sum = 0;
     int index = 0;
 
@@ -58,19 +58,19 @@ public class ActivitiesActivity extends AppCompatActivity {
                         sum++;
                     }
                 }
-                search = new int[sum];
+                search = new String[sum];
                 for (int i = 0; i < activitie.length; i++) {
                     if (activitie[i] != 0) {
-                        search[index] = activitie[i];
+                        search[index] = String.valueOf(activitie[i]);
                         index++;
                     }
                 }
-                Toast.makeText(ActivitiesActivity.this, ""+ Arrays.spliterator(search), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivitiesActivity.this, ""+ Arrays.toString(search), Toast.LENGTH_SHORT).show();
                 sum = 0;
                 index = 0;
 
-//                startActivity(new Intent(mContext,KaowatActivity2.class).putExtra("id",search));
-//                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
+                startActivity(new Intent(mContext,KaowatActivity2.class).putExtra("id",search));
+                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
             }
         });
         new ConnectAPI().getActivitiesAll(mContext);
@@ -99,6 +99,11 @@ public class ActivitiesActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 //    public void fetchProjects() {

@@ -123,6 +123,24 @@
                </LinearLayout>
            </LinearLayout>
            <mehdi.sakout.fancybuttons.FancyButton
+               android:id="@+id/btn_litanies"
+               android:layout_width="200dp"
+               android:layout_height="50dp"
+               android:paddingBottom="10dp"
+               android:paddingLeft="20dp"
+               android:paddingRight="20dp"
+               android:paddingTop="10dp"
+               fancy:fb_iconPaddingRight="10dp"
+               fancy:fb_defaultColor="@color/colorPrimary"
+               fancy:fb_focusColor="@color/colorPrimary2"
+               fancy:fb_radius="30dp"
+               fancy:fb_text="บทสวดมนต์"
+               android:textSize="20dp"
+               android:textStyle="bold"
+               fancy:fb_textColor="@color/white"
+               android:layout_margin="5dp"
+               android:layout_gravity="center_horizontal" />
+           <mehdi.sakout.fancybuttons.FancyButton
                android:id="@+id/btn_search"
                android:layout_width="200dp"
                android:layout_height="50dp"

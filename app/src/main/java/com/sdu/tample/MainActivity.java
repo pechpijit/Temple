@@ -142,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 break;
             case R.id.btn_quiz:
-                startActivity(new Intent(mContext,StartQuizActivity.class));
+                startActivity(new Intent(mContext,MapHotActivity.class));
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 break;
         }
