@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -55,6 +56,7 @@ public class KaowatActivity2 extends AppCompatActivity {
 
 
         new ConnectAPI().getActivitiesSearch(KaowatActivity2.this,implode(", ", id));
+//        Toast.makeText(KaowatActivity2.this, implode(", ", id), Toast.LENGTH_SHORT).show();
 
     }
 

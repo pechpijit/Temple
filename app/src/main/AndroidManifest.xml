@@ -31,6 +31,9 @@
             android:name=".VehicleActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".VehicleCatActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".StartQuizActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -59,10 +62,13 @@
             android:name=".MapHotActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".MapWatActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".ViewMapActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".DetailVehicleActivity"
+            android:name=".DesVehicleActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".NewsActivity"

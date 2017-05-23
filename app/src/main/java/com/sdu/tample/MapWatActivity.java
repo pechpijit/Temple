@@ -1,28 +1,19 @@
 package com.sdu.tample;
 
-import com.bumptech.glide.Glide;
-import com.google.android.gms.maps.*;
-import com.google.android.gms.maps.model.*;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.sdu.tample.model.ModelHot;
-import com.sdu.tample.model.ModelMapHot;
-import com.sdu.tample.model.ModelTempleMap;
-
-import android.app.Activity;
 import android.content.Context;
-import android.content.pm.PackageManager;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,23 +24,44 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.sdu.tample.adapter.AdapterMapTemple;
+import com.sdu.tample.model.ModelHot;
+import com.sdu.tample.model.ModelTemple;
+import com.sdu.tample.model.ModelTempleMap;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class MapHotActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
+
+public class MapWatActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
         ActivityCompat.OnRequestPermissionsResultCallback {
-    private static LatLng b9 = new LatLng(13.7154937, 100.5820363);
+//    private static LatLng b9 = new LatLng(13.7154937, 100.5820363);
     private Marker mPerth;
-
+    Context mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_map2);
+        setContentView(R.layout.activity_map3);
+        mContext = this;
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
@@ -57,62 +69,35 @@ public class MapHotActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap map) {
         final GoogleMap mMap = map;
-        new ConnectAPI().getHotAll(MapHotActivity.this, mMap);
+        new ConnectAPI().getTempleMap(MapWatActivity.this, mMap);
     }
 
-    /**
-     * Called when the user clicks a marker.
-     */
+
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
-        // Retrieve the data from the marker.
         Integer clickCount = (Integer) marker.getTag();
 
-        // Check if a click count was set, then display the click count.
         if (clickCount != null) {
             clickCount = clickCount + 1;
             marker.setTag(clickCount);
-            Toast.makeText(MapHotActivity.this,
+            Toast.makeText(MapWatActivity.this,
                     marker.getTitle() +
                             " has been clicked " + clickCount + " times.",
                     Toast.LENGTH_SHORT).show();
         }
 
-        // Return false to indicate that we have not consumed the event and that we wish
-        // for the default behavior to occur (which is for the camera to move such that the
-        // marker is centered and for the marker's info window to open, if it has one).
         return false;
-    }
-
-    private BitmapDescriptor setIcon(int i) {
-        switch (i) {
-            case 1:
-                return BitmapDescriptorFactory.fromResource(R.drawable.ic_map3);
-            case 2:
-                return BitmapDescriptorFactory.fromResource(R.drawable.ic_map1);
-            case 3:
-                return BitmapDescriptorFactory.fromResource(R.drawable.ic_map2);
-        }
-        return BitmapDescriptorFactory.fromResource(R.drawable.ic_marker);
     }
 
     public void addMarker(GoogleMap mMap, String string,String url) {
         Gson gson = new Gson();
-        ModelMapHot post = gson.fromJson(string, ModelMapHot.class);
-
-        for (ModelHot contentModel :
-                post.getHot()) {
-            mPerth = mMap.addMarker(new MarkerOptions()
-                    .position(new LatLng(Double.parseDouble(contentModel.getInterestingLatitude()), Double.parseDouble(contentModel.getInterestingLongitude())))
-                    .icon(setIcon(contentModel.getInterestingCategory()))
-                    .title(contentModel.getInterestingName()));
-            mPerth.setTag(contentModel.getId());
-
-        }
+        Type collectionType = new TypeToken<Collection<ModelTempleMap>>() {}.getType();
+        Collection<ModelTempleMap> enums = gson.fromJson(string, collectionType);
+        ArrayList<ModelTempleMap> post = new ArrayList<ModelTempleMap>(enums);
 
         for (ModelTempleMap contentModel :
-                post.getWat()) {
+                post) {
             mPerth = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(Double.parseDouble(contentModel.getLa()), Double.parseDouble(contentModel.getLo())))
 //                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
@@ -121,9 +106,6 @@ public class MapHotActivity extends AppCompatActivity implements OnMapReadyCallb
             mPerth.setTag(contentModel.getId());
 
         }
-
-
-
 
         // Set a listener for marker click.
         mMap.setOnMarkerClickListener(this);
@@ -183,6 +165,44 @@ public class MapHotActivity extends AppCompatActivity implements OnMapReadyCallb
                 return R.drawable.wat_9_1;
         }
         return R.drawable.nopic;
+    }
+
+
+    public void setAdap(String data,String url) {
+
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<Collection<ModelTempleMap>>() {
+        }.getType();
+        Collection<ModelTempleMap> enums = gson.fromJson(data, collectionType);
+        final ArrayList<ModelTempleMap> posts = new ArrayList<ModelTempleMap>(enums);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.dummyfrag_scrollableview);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getBaseContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setHasFixedSize(true);
+
+        AdapterMapTemple adapter = new AdapterMapTemple(mContext, posts);
+        recyclerView.setAdapter(adapter);
+
+        adapter.SetOnItemClickListener(new AdapterMapTemple.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                int ID = posts.get(position).getId();
+//                String la = posts.get(position).getTempleLatittude();
+//                String lo = posts.get(position).getTempleLongitude();
+//                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+//                        Uri.parse("http://maps.google.com/maps?daddr="+la+","+lo));
+//                startActivity(intent);
+                startActivity(new Intent(mContext, TempleActivity.class).putExtra("id",ID));
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+            }
+        });
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {

@@ -11,6 +11,9 @@ public class ModelVehicle {
     @SerializedName("vehicleName")
     @Expose
     private String vehicleName;
+    @SerializedName("vehicleAddress")
+    @Expose
+    private String vehicleAddress;
     @SerializedName("vehicleTel1")
     @Expose
     private String vehicleTel1;
@@ -26,6 +29,15 @@ public class ModelVehicle {
     @SerializedName("vehicleDetail")
     @Expose
     private String vehicleDetail;
+    @SerializedName("vehicleCategory")
+    @Expose
+    private Integer vehicleCategory;
+    @SerializedName("vehicleLatitude")
+    @Expose
+    private String vehicleLatitude;
+    @SerializedName("vehicleLongitude")
+    @Expose
+    private String vehicleLongitude;
     @SerializedName("vehicleImage")
     @Expose
     private String vehicleImage;
@@ -56,6 +68,14 @@ public class ModelVehicle {
 
     public void setVehicleName(String vehicleName) {
         this.vehicleName = vehicleName;
+    }
+
+    public String getVehicleAddress() {
+        return vehicleAddress;
+    }
+
+    public void setVehicleAddress(String vehicleAddress) {
+        this.vehicleAddress = vehicleAddress;
     }
 
     public String getVehicleTel1() {
@@ -96,6 +116,30 @@ public class ModelVehicle {
 
     public void setVehicleDetail(String vehicleDetail) {
         this.vehicleDetail = vehicleDetail;
+    }
+
+    public Integer getVehicleCategory() {
+        return vehicleCategory;
+    }
+
+    public void setVehicleCategory(Integer vehicleCategory) {
+        this.vehicleCategory = vehicleCategory;
+    }
+
+    public String getVehicleLatitude() {
+        return vehicleLatitude;
+    }
+
+    public void setVehicleLatitude(String vehicleLatitude) {
+        this.vehicleLatitude = vehicleLatitude;
+    }
+
+    public String getVehicleLongitude() {
+        return vehicleLongitude;
+    }
+
+    public void setVehicleLongitude(String vehicleLongitude) {
+        this.vehicleLongitude = vehicleLongitude;
     }
 
     public String getVehicleImage() {

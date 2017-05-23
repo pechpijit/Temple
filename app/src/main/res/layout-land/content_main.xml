@@ -53,7 +53,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="ไหว้พระ 9 วัด"
+                                android:text="วัด"
                                 android:id="@+id/textView2"
                                 android:layout_gravity="center_horizontal"
                                 android:textStyle="bold"
@@ -78,7 +78,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="ประชาสัมพันธ์"
+                                android:text="ข่าวสาร"
                                 android:id="@+id/textView3"
                                 android:layout_gravity="center_horizontal"
                                 android:textStyle="bold"
@@ -110,7 +110,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="แผนที่"
+                                android:text="เส้นทาง 9 วัด"
                                 android:id="@+id/textView4"
                                 android:layout_gravity="center_horizontal"
                                 android:textStyle="bold"
@@ -135,7 +135,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="เช่ายานพาหนะ"
+                                android:text="ยานพาหนะ"
                                 android:id="@+id/textView5"
                                 android:layout_gravity="center_horizontal"
                                 android:textStyle="bold"

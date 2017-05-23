@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
 
             mDemoSlider.addSlider(textSliderView);
         }
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.ZoomOut);
+//        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.ZoomOut);
         mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mDemoSlider.setCustomAnimation(new DescriptionAnimation());
         mDemoSlider.setDuration(4000);
@@ -130,11 +130,11 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 break;
             case R.id.btn_map:
-                startActivity(new Intent(mContext,MapActivity.class));
+                startActivity(new Intent(mContext,MapWatActivity.class));
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 break;
             case R.id.btn_v:
-                startActivity(new Intent(mContext,VehicleActivity.class));
+                startActivity(new Intent(mContext,VehicleCatActivity.class));
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 break;
             case R.id.btn_activities:

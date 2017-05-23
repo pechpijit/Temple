@@ -14,7 +14,9 @@ import android.view.View;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sdu.tample.adapter.AdapterListVehicle;
+import com.sdu.tample.adapter.AdapterListVehicleCat;
 import com.sdu.tample.model.ModelVehicle;
+import com.sdu.tample.model.ModelVehicleCat;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -22,7 +24,7 @@ import java.util.Collection;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class VehicleActivity extends AppCompatActivity {
+public class VehicleCatActivity extends AppCompatActivity {
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     Context mContext;
@@ -36,28 +38,25 @@ public class VehicleActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         mContext = this;
 
-        Bundle i = getIntent().getExtras();
-        int id = i.getInt("id");
-
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new ConnectAPI().getTempleAll(VehicleActivity.this);
+                new ConnectAPI().getTempleAll(VehicleCatActivity.this);
             }
         });
 
-        new ConnectAPI().getVehicleCatId(VehicleActivity.this,id);
+        new ConnectAPI().getVehicleCat(VehicleCatActivity.this);
 
     }
 
     public void setAdap(String data,String url) {
         Gson gson = new Gson();
-        Type collectionType = new TypeToken<Collection<ModelVehicle>>() {
+        Type collectionType = new TypeToken<Collection<ModelVehicleCat>>() {
         }.getType();
-        Collection<ModelVehicle> enums = gson.fromJson(data, collectionType);
-        final ArrayList<ModelVehicle> posts = new ArrayList<ModelVehicle>(enums);
+        Collection<ModelVehicleCat> enums = gson.fromJson(data, collectionType);
+        final ArrayList<ModelVehicleCat> posts = new ArrayList<ModelVehicleCat>(enums);
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.dummyfrag_scrollableview);
 
@@ -65,7 +64,7 @@ public class VehicleActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
-        AdapterListVehicle adapter = new AdapterListVehicle(this, posts, url);
+        AdapterListVehicleCat adapter = new AdapterListVehicleCat(this, posts, url);
         recyclerView.setAdapter(adapter);
 
         try {
@@ -74,11 +73,11 @@ public class VehicleActivity extends AppCompatActivity {
 
         }
 
-        adapter.SetOnItemClickListener(new AdapterListVehicle.OnItemClickListener() {
+        adapter.SetOnItemClickListener(new AdapterListVehicleCat.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 int ID = posts.get(position).getId();
-                startActivity(new Intent(mContext, DesVehicleActivity.class).putExtra("id",ID));
+                startActivity(new Intent(mContext, VehicleActivity.class).putExtra("id",ID));
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });

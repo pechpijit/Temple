@@ -2,6 +2,7 @@ package com.sdu.tample.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +12,20 @@ import android.widget.TextView;
 import com.sdu.tample.R;
 import com.sdu.tample.model.ModelActivities;
 import com.sdu.tample.model.ModelTemple;
+import com.sdu.tample.model.ModelTempleMap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class AdapterMapTemple extends RecyclerView.Adapter<AdapterMapTemple.VersionViewHolder> {
     Boolean isHomeList = false;
-    ArrayList<ModelTemple> posts;
+    ArrayList<ModelTempleMap> posts;
 
     Context context;
     OnItemClickListener clickListener;
 
-    public AdapterMapTemple(Context applicationContext, ArrayList<ModelTemple> posts) {
+    public AdapterMapTemple(Context applicationContext, ArrayList<ModelTempleMap> posts) {
         this.context = applicationContext;
         this.posts = posts;
     }
@@ -37,9 +40,11 @@ public class AdapterMapTemple extends RecyclerView.Adapter<AdapterMapTemple.Vers
 
     @Override
     public void onBindViewHolder(final VersionViewHolder versionViewHolder, final int i) {
-        String[] temp = posts.get(i).getTempleName().split(" ");
-        versionViewHolder.txt_name.setText((i+1)+". "+posts.get(i).getTempleName().substring(0,temp[0].length())+"\n"+
-                posts.get(i).getTempleName().substring(temp[0].length()));
+        String[] temp = posts.get(i).getName().split(" ");
+        Log.d("substring", Arrays.toString(temp));
+
+        versionViewHolder.txt_name.setText((i+1)+". "+posts.get(i).getName().substring(0,temp[0].length())+"\n"+
+                posts.get(i).getName().substring(temp[0].length()));
     }
 
     @Override

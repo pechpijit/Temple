@@ -23,6 +23,9 @@ public class ModelHot {
     @SerializedName("interestingStatus")
     @Expose
     private String interestingStatus;
+    @SerializedName("interestingCategory")
+    @Expose
+    private int interestingCategory;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -78,6 +81,14 @@ public class ModelHot {
         this.interestingStatus = interestingStatus;
     }
 
+    public int getInterestingCategory() {
+        return interestingCategory;
+    }
+
+    public void setInterestingCategory(int interestingCategory) {
+        this.interestingCategory = interestingCategory;
+    }
+
     public String getCreatedAt() {
         return createdAt;
     }
@@ -93,5 +104,4 @@ public class ModelHot {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 }

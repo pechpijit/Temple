@@ -64,35 +64,35 @@ public class MapActivity extends AppCompatActivity {
     }
 
     public void setAdap(String data,String url) {
-
-        Gson gson = new Gson();
-        Type collectionType = new TypeToken<Collection<ModelTemple>>() {
-        }.getType();
-        Collection<ModelTemple> enums = gson.fromJson(data, collectionType);
-        final ArrayList<ModelTemple> posts = new ArrayList<ModelTemple>(enums);
-
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.dummyfrag_scrollableview);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getBaseContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setHasFixedSize(true);
-
-        AdapterMapTemple adapter = new AdapterMapTemple(mContext, posts);
-        recyclerView.setAdapter(adapter);
-
-        adapter.SetOnItemClickListener(new AdapterMapTemple.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                int ID = posts.get(position).getId();
-//                String la = posts.get(position).getTempleLatittude();
-//                String lo = posts.get(position).getTempleLongitude();
-//                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-//                        Uri.parse("http://maps.google.com/maps?daddr="+la+","+lo));
-//                startActivity(intent);
-                startActivity(new Intent(mContext, TempleActivity.class).putExtra("id",ID));
-                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-            }
-        });
+//
+//        Gson gson = new Gson();
+//        Type collectionType = new TypeToken<Collection<ModelTemple>>() {
+//        }.getType();
+//        Collection<ModelTemple> enums = gson.fromJson(data, collectionType);
+//        final ArrayList<ModelTemple> posts = new ArrayList<ModelTemple>(enums);
+//
+//        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.dummyfrag_scrollableview);
+//
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getBaseContext());
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//        recyclerView.setHasFixedSize(true);
+//
+//        AdapterMapTemple adapter = new AdapterMapTemple(mContext, posts);
+//        recyclerView.setAdapter(adapter);
+//
+//        adapter.SetOnItemClickListener(new AdapterMapTemple.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(View view, int position) {
+//                int ID = posts.get(position).getId();
+////                String la = posts.get(position).getTempleLatittude();
+////                String lo = posts.get(position).getTempleLongitude();
+////                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+////                        Uri.parse("http://maps.google.com/maps?daddr="+la+","+lo));
+////                startActivity(intent);
+//                startActivity(new Intent(mContext, TempleActivity.class).putExtra("id",ID));
+//                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+//            }
+//        });
     }
 
     @Override

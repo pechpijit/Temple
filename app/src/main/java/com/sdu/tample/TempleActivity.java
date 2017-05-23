@@ -1,5 +1,7 @@
 package com.sdu.tample;
 
+import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,6 +9,7 @@ import android.content.res.Configuration;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.view.animation.LinearOutSlowInInterpolator;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,8 +19,12 @@ import android.view.Surface;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
@@ -35,19 +42,25 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Locale;
 
+import at.blogc.android.views.ExpandableTextView;
 import mehdi.sakout.fancybuttons.FancyButton;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class TempleActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
+public class TempleActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener,View.OnClickListener{
     Context mContext;
-    TextView txt_title, txt_detail, txt_address, txt_holy, txt_time;
-    LinearLayout view;
+    TextView txt_title;
+    LinearLayout view,view_detail,view_address,view_object,view_time,view_nearby;
     private SliderLayout mDemoSlider;
     HashMap<String, String> url_maps;
-    FancyButton btn_search, btn_litanies;
+    Button btn_search, btn_litanies;
     String la, lo;
     int id = 0;
+    String TAG = "TempleActivity";
+    ImageView img_ex1,img_ex2,img_ex3, img_ex4, img_ex5;
+
+    ExpandableTextView ex_detail,ex_address,ex_object, ex_time,ex_nearby;
 
     @Override
     public void onBackPressed() {
@@ -69,32 +82,52 @@ public class TempleActivity extends AppCompatActivity implements BaseSliderView.
         url_maps = new HashMap<String, String>();
 
         txt_title = (TextView) findViewById(R.id.txt_title);
-        txt_detail = (TextView) findViewById(R.id.txt_detail);
-        txt_address = (TextView) findViewById(R.id.txt_address);
-        txt_holy = (TextView) findViewById(R.id.txt_holy);
-        txt_time = (TextView) findViewById(R.id.txt_time);
         view = (LinearLayout) findViewById(R.id.view);
-        btn_litanies = (FancyButton) findViewById(R.id.btn_litanies);
-        btn_search = (FancyButton) findViewById(R.id.btn_search);
-        btn_search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                        Uri.parse("http://maps.google.com/maps?daddr=" + la + "," + lo));
-                startActivity(intent);
-            }
-        });
 
-        btn_litanies.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new ConnectAPI().getLitaniesId(mContext, id);
-            }
-        });
+        view_detail = (LinearLayout) findViewById(R.id.view_detail);
+        view_address = (LinearLayout) findViewById(R.id.view_address);
+        view_object = (LinearLayout) findViewById(R.id.view_object);
+        view_time = (LinearLayout) findViewById(R.id.view_time);
+        view_nearby = (LinearLayout) findViewById(R.id.view_nearby);
+
+        btn_litanies = (Button) findViewById(R.id.btn_litanies);
+        btn_search = (Button) findViewById(R.id.btn_search);
+
+        ex_detail = (ExpandableTextView) this.findViewById(R.id.ex_detail);
+        ex_address = (ExpandableTextView) this.findViewById(R.id.ex_address);
+        ex_object = (ExpandableTextView) this.findViewById(R.id.ex_object);
+        ex_time = (ExpandableTextView) this.findViewById(R.id.ex_time);
+        ex_nearby = (ExpandableTextView) this.findViewById(R.id.ex_nearby);
+
+        img_ex1 = (ImageView) findViewById(R.id.img_ex1);
+        img_ex2 = (ImageView) findViewById(R.id.img_ex2);
+        img_ex3 = (ImageView) findViewById(R.id.img_ex3);
+        img_ex4 = (ImageView) findViewById(R.id.img_ex4);
+        img_ex5 = (ImageView) findViewById(R.id.img_ex5);
+
+        setSettingEx(ex_detail);
+        setSettingEx(ex_address);
+        setSettingEx(ex_object);
+        setSettingEx(ex_time);
+        setSettingEx(ex_nearby);
+
+        view_detail.setOnClickListener(this);
+        view_address.setOnClickListener(this);
+        view_object.setOnClickListener(this);
+        view_time.setOnClickListener(this);
+        view_nearby.setOnClickListener(this);
+
+        btn_litanies.setOnClickListener(this);
+        btn_search.setOnClickListener(this);
 
         Bundle i = getIntent().getExtras();
         id = i.getInt("id");
         new ConnectAPI().getTempleId(mContext, id);
+    }
+
+    private void setSettingEx(ExpandableTextView ex) {
+        ex.setAnimationDuration(750L);
+        ex.setInterpolator(new LinearOutSlowInInterpolator());
     }
 
     public void setView(String string, String url) {
@@ -118,7 +151,7 @@ public class TempleActivity extends AppCompatActivity implements BaseSliderView.
             mDemoSlider.addSlider(textSliderView);
         }
 
-        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.ZoomOut);
+//        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.ZoomOut);
         mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
         mDemoSlider.setCustomAnimation(new DescriptionAnimation());
         mDemoSlider.setDuration(4000);
@@ -131,10 +164,12 @@ public class TempleActivity extends AppCompatActivity implements BaseSliderView.
 
         getScreenOrientation(model.getTemple().getTempleName());
 
-        txt_detail.setText(model.getTemple().getTempleDetail());
-        txt_address.setText(model.getTemple().getTempleAddress());
-        txt_holy.setText(model.getTemple().getTempleHolyObject());
-        txt_time.setText(model.getTemple().getTempleTimeOpen() + "-" + model.getTemple().getTempleTimeClose());
+        ex_detail.setText(model.getTemple().getTempleDetail());
+        ex_address.setText(model.getTemple().getTempleAddress());
+        ex_object.setText(model.getTemple().getTempleHolyObject());
+        ex_time.setText(model.getTemple().getTempleTimeOpen() + "-" + model.getTemple().getTempleTimeClose());
+        ex_nearby.setText(model.getTemple().getTemplePlaceMost());
+
         view.setVisibility(View.VISIBLE);
     }
 
@@ -220,6 +255,46 @@ public class TempleActivity extends AppCompatActivity implements BaseSliderView.
             } else {
                 txt_title.setText(templeName);
             }
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_litanies:
+                new ConnectAPI().getLitaniesId(mContext, id);
+                break;
+            case R.id.btn_search:
+                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                        Uri.parse("http://maps.google.com/maps?daddr="+la+","+lo));
+                startActivity(intent);
+                break;
+            case R.id.view_detail:
+                setEx(ex_detail,img_ex1);
+                break;
+            case R.id.view_address:
+                setEx(ex_address,img_ex2);
+                break;
+            case R.id.view_object:
+                setEx(ex_object,img_ex3);
+                break;
+            case R.id.view_time:
+                setEx(ex_time,img_ex4);
+                break;
+            case R.id.view_nearby:
+                setEx(ex_nearby,img_ex5);
+                break;
+        }
+    }
+
+    private void setEx(ExpandableTextView ex,ImageView img) {
+        ex.toggle();
+        if (ex.isExpanded()) {
+            img.animate().rotation(0).start();
+            ex.collapse();
+        } else {
+            img.animate().rotation(180).start();
+            ex.expand();
         }
     }
 }

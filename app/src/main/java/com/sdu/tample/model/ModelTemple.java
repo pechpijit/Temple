@@ -9,6 +9,9 @@ public class ModelTemple {
     @SerializedName("templeName")
     @Expose
     private String templeName;
+    @SerializedName("templeNumber")
+    @Expose
+    private int templeNumber;
     @SerializedName("templeDetail")
     @Expose
     private String templeDetail;
@@ -45,6 +48,9 @@ public class ModelTemple {
     @SerializedName("templeImage")
     @Expose
     private String templeImage;
+    @SerializedName("templePlaceMost")
+    @Expose
+    private String templePlaceMost;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -66,6 +72,14 @@ public class ModelTemple {
 
     public void setTempleName(String templeName) {
         this.templeName = templeName;
+    }
+
+    public int getTempleNumber() {
+        return templeNumber;
+    }
+
+    public void setTempleNumber(int templeNumber) {
+        this.templeNumber = templeNumber;
     }
 
     public String getTempleDetail() {
@@ -164,6 +178,14 @@ public class ModelTemple {
         this.templeImage = templeImage;
     }
 
+    public String getTemplePlaceMost() {
+        return templePlaceMost;
+    }
+
+    public void setTemplePlaceMost(String templePlaceMost) {
+        this.templePlaceMost = templePlaceMost;
+    }
+
     public String getCreatedAt() {
         return createdAt;
     }
@@ -179,5 +201,4 @@ public class ModelTemple {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 }
