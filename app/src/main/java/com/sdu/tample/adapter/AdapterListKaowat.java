@@ -37,7 +37,12 @@ public class AdapterListKaowat extends RecyclerView.Adapter<AdapterListKaowat.Ve
     @Override
     public void onBindViewHolder(final VersionViewHolder versionViewHolder, final int i) {
         versionViewHolder.txt_name.setText(posts.get(i).getTempleName());
-        versionViewHolder.txt_desc.setText("\t"+posts.get(i).getTempleDetail().substring(0,20)+"...");
+
+        try {
+            versionViewHolder.txt_desc.setText("\t" + posts.get(i).getTempleDetail().substring(0, 20) + "...");
+        } catch (Exception e) {
+
+        }
 
         try {
             Glide.with(context)

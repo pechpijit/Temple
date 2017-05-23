@@ -38,7 +38,11 @@ public class AdapterListVehicle extends RecyclerView.Adapter<AdapterListVehicle.
     @Override
     public void onBindViewHolder(final VersionViewHolder versionViewHolder, final int i) {
         versionViewHolder.txt_name.setText(posts.get(i).getVehicleName());
-        versionViewHolder.txt_desc.setText("\t"+posts.get(i).getVehicleDetail().substring(0,20)+"...");
+        try {
+            versionViewHolder.txt_desc.setText("\t" + posts.get(i).getVehicleDetail().substring(0, 20) + "...");
+        } catch (Exception e) {
+
+        }
 
         try {
             Glide.with(context)

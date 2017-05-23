@@ -21,8 +21,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ConnectAPI {
-//    String URL = "http://aofdev.ddns.net/temple/public";
-    String URL = "http://192.168.1.50/temple/public";
+    String URL = "http://aofdev.ddns.net/temple/public";
+//    String URL = "http://192.168.1.50/temple/public";
 
     public void getTempleAll(final Context mContext) {
         new AsyncTask<Void, Void, String>() {
