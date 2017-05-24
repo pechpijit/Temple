@@ -37,14 +37,14 @@ public class VehicleActivity extends AppCompatActivity {
         mContext = this;
 
         Bundle i = getIntent().getExtras();
-        int id = i.getInt("id");
+        final int id = i.getInt("id");
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new ConnectAPI().getTempleAll(VehicleActivity.this);
+                new ConnectAPI().getVehicleCatId(VehicleActivity.this,id);
             }
         });
 

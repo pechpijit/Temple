@@ -59,7 +59,6 @@ public class ConnectAPI {
                     dialogErrorNoIntent(mContext, string);
                 } else {
                     ((KaowatActivity) mContext).setAdap(string,URL);
-
                 }
             }
         }.execute();

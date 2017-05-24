@@ -43,7 +43,7 @@ public class VehicleCatActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new ConnectAPI().getTempleAll(VehicleCatActivity.this);
+                new ConnectAPI().getVehicleCat(VehicleCatActivity.this);
             }
         });
 
