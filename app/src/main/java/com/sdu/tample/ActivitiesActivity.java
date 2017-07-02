@@ -35,6 +35,7 @@ public class ActivitiesActivity extends AppCompatActivity {
     String[] search;
     int sum = 0;
     int index = 0;
+    int ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,9 @@ public class ActivitiesActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_activities);
+
+        ID = getIntent().getExtras().getInt("id");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -69,7 +73,7 @@ public class ActivitiesActivity extends AppCompatActivity {
                 sum = 0;
                 index = 0;
 
-                startActivity(new Intent(mContext,KaowatActivity2.class).putExtra("id",search));
+                startActivity(new Intent(mContext,KaowatActivity2.class).putExtra("id",search).putExtra("idPro",ID));
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
             }
         });

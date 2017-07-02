@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.DrawableRes;
 import android.support.v4.app.ActivityCompat;
@@ -41,19 +43,36 @@ import com.sdu.tample.adapter.AdapterMapTemple;
 import com.sdu.tample.model.ModelHot;
 import com.sdu.tample.model.ModelTemple;
 import com.sdu.tample.model.ModelTempleMap;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Type;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Hashtable;
 
+import mehdi.sakout.fancybuttons.Utils;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 public class MapWatActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener,
         ActivityCompat.OnRequestPermissionsResultCallback {
-//    private static LatLng b9 = new LatLng(13.7154937, 100.5820363);
+    //    private static LatLng b9 = new LatLng(13.7154937, 100.5820363);
     private Marker mPerth;
     Context mContext;
+    int ID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +80,9 @@ public class MapWatActivity extends AppCompatActivity implements OnMapReadyCallb
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_map3);
+
+        ID = getIntent().getExtras().getInt("id");
+
         mContext = this;
         MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -69,7 +91,7 @@ public class MapWatActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public void onMapReady(GoogleMap map) {
         final GoogleMap mMap = map;
-        new ConnectAPI().getTempleMap(MapWatActivity.this, mMap);
+        new ConnectAPI().getTempleMap(MapWatActivity.this, mMap, ID);
     }
 
 
@@ -90,44 +112,59 @@ public class MapWatActivity extends AppCompatActivity implements OnMapReadyCallb
         return false;
     }
 
-    public void addMarker(GoogleMap mMap, String string,String url) {
+    public void addMarker(GoogleMap mMap, String string, String url) {
         Gson gson = new Gson();
-        Type collectionType = new TypeToken<Collection<ModelTempleMap>>() {}.getType();
+        Type collectionType = new TypeToken<Collection<ModelTempleMap>>() {
+        }.getType();
         Collection<ModelTempleMap> enums = gson.fromJson(string, collectionType);
         ArrayList<ModelTempleMap> post = new ArrayList<ModelTempleMap>(enums);
 
+        LatLng Position = null;
+        int lastIndex = 0;
         for (ModelTempleMap contentModel :
                 post) {
             mPerth = mMap.addMarker(new MarkerOptions()
                     .position(new LatLng(Double.parseDouble(contentModel.getLa()), Double.parseDouble(contentModel.getLo())))
 //                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
-                    .icon((BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(contentModel.getNumber()))))
+                    .icon((BitmapDescriptorFactory.fromBitmap(getMarkerBitmapFromView(url + "/templeImage_resize/" + contentModel.getImage()))))
                     .title(contentModel.getName()));
             mPerth.setTag(contentModel.getId());
-
+            if (lastIndex == 0) {
+                Position = new LatLng(Double.parseDouble(contentModel.getLa()), Double.parseDouble(contentModel.getLo()));
+                lastIndex++;
+            }
         }
 
         // Set a listener for marker click.
         mMap.setOnMarkerClickListener(this);
         mMap.setBuildingsEnabled(true);
+
         CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(14.3532128, 100.5689599)).zoom(10).build(); // เอาไว้ Fix Location
+                .target(Position).zoom(11).build(); // เอาไว้ Fix Location
         mMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));//แบบมี Animation
+
 //        googleMap.getUiSettings().setScrollGesturesEnabled(false);
 //        ปิดไม่ให้เลื่อน map
 //        googleMap.setMapType(com.google.android.gms.maps.GoogleMap.MAP_TYPE_SATELLITE);// แบบจริง
 //        googleMap.setMapType(com.google.android.gms.maps.GoogleMap.MAP_TYPE_TERRAIN);//แบบภาพวาด
         mMap.getUiSettings().setZoomControlsEnabled(true);
 //        mMap.setInfoWindowAdapter(new MyInfoWindowAdapter());
+//        mMap.setInfoWindowAdapter(new MapInfoWindowAdapter(this, markerSet));
     }
 
-    private Bitmap getMarkerBitmapFromView(@DrawableRes int resId) {
+    private Bitmap getMarkerBitmapFromView(final String url) {
 
         View customMarkerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.view_marker, null);
-        ImageView markerImageView = (ImageView) customMarkerView.findViewById(R.id.avatar_marker_image_view);
+        final ImageView markerImageView = (ImageView) customMarkerView.findViewById(R.id.avatar_marker_image_view);
 
-        markerImageView.setImageResource(setImgMap(resId));
+        try {
+            URL UR = new URL(url);
+            Bitmap bmp = BitmapFactory.decodeStream(UR.openConnection().getInputStream());
+            markerImageView.setImageBitmap(bmp);
+        } catch (Exception e) {
+            Log.d("loadImage", e+"");
+        }
 
         customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         customMarkerView.layout(0, 0, customMarkerView.getMeasuredWidth(), customMarkerView.getMeasuredHeight());
@@ -143,32 +180,17 @@ public class MapWatActivity extends AppCompatActivity implements OnMapReadyCallb
         return returnedBitmap;
     }
 
-    private int setImgMap(int i) {
-        switch (i) {
-            case 1:
-                return R.drawable.wat_1_1;
-            case 2:
-                return R.drawable.wat_2_1;
-            case 3:
-                return R.drawable.wat_3_1;
-            case 4:
-                return R.drawable.wat_4_1;
-            case 5:
-                return R.drawable.wat_5_1;
-            case 6:
-                return R.drawable.wat_6_1;
-            case 7:
-                return R.drawable.wat_7_1;
-            case 8:
-                return R.drawable.wat_8_1;
-            case 9:
-                return R.drawable.wat_9_1;
+
+    private Bitmap loadImageFromNetwork(String string) {
+        try {
+            URL UR = new URL(string);
+            return BitmapFactory.decodeStream(UR.openConnection().getInputStream());
+        } catch (Exception e) {
+            return null;
         }
-        return R.drawable.nopic;
     }
 
-
-    public void setAdap(String data,String url) {
+    public void setAdap(String data, String url) {
 
         Gson gson = new Gson();
         Type collectionType = new TypeToken<Collection<ModelTempleMap>>() {
@@ -194,7 +216,7 @@ public class MapWatActivity extends AppCompatActivity implements OnMapReadyCallb
 //                Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
 //                        Uri.parse("http://maps.google.com/maps?daddr="+la+","+lo));
 //                startActivity(intent);
-                startActivity(new Intent(mContext, TempleActivity.class).putExtra("id",ID));
+                startActivity(new Intent(mContext, TempleActivity.class).putExtra("id", ID));
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
@@ -203,37 +225,6 @@ public class MapWatActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
-    class MyInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
-
-        private final View myContentsView;
-
-        MyInfoWindowAdapter(){
-            myContentsView = getLayoutInflater().inflate(R.layout.custom_info_contents, null);
-        }
-
-        @Override
-        public View getInfoContents(final Marker marker) {
-
-            TextView tvTitle = ((TextView)myContentsView.findViewById(R.id.title));
-            tvTitle.setText(marker.getTitle());
-            Button button = (Button) myContentsView.findViewById(R.id.btn_click);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
-                }
-            });
-            return myContentsView;
-        }
-
-        @Override
-        public View getInfoWindow(Marker marker) {
-            // TODO Auto-generated method stub
-            return null;
-        }
-
     }
 
 }

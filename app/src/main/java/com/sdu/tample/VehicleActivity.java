@@ -26,7 +26,7 @@ public class VehicleActivity extends AppCompatActivity {
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     Context mContext;
-
+    int idPro;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +35,7 @@ public class VehicleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         mContext = this;
+        idPro = getIntent().getExtras().getInt("idPro");
 
         Bundle i = getIntent().getExtras();
         final int id = i.getInt("id");
@@ -44,11 +45,11 @@ public class VehicleActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new ConnectAPI().getVehicleCatId(VehicleActivity.this,id);
+                new ConnectAPI().getVehicleCatId(VehicleActivity.this,id,idPro);
             }
         });
 
-        new ConnectAPI().getVehicleCatId(VehicleActivity.this,id);
+        new ConnectAPI().getVehicleCatId(VehicleActivity.this,id,idPro);
 
     }
 

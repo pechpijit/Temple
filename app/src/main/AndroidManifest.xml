@@ -18,6 +18,7 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyC5bCovgETnpWkEzy1Sw4cIVH-XSmYBjoc" />
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -77,11 +78,15 @@
         <activity
             android:name=".DetailNewsActivity"
             android:label="@string/title_activity_detail_news"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".FullscreenActivity"
             android:label=""
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ProvinceActivity"
+            android:label="ไหว้พระ ๙ วัด"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="teal_500">#FF9800</color> <!-- Use with white text -->
+    <color name="teal_100">#fcba5e</color> <!-- Use with black text -->
+
+    <color name="theme_primary">#2196F3</color>
+    <color name="theme_primary_dark">#1976D2</color>
+    <color name="theme_primary_light">#BBDEFB</color>
+
+    <color name="theme_background">#FFFFFF</color>
+    <color name="theme_background_inverse">#212121</color>
+
+    <color name="theme_accent_1">#212121</color>
+
+    <color name="theme_primary_trans">#99212121</color>
+
+    <color name="theme_primary_text">#212121</color>
+    <color name="theme_secondary_text">#727272</color>
+    <color name="theme_primary_text_inverted">#ffffff</color>
+    <color name="theme_secondary_text_inverted">#8affffff</color>
+    <color name="theme_icons">#FFFFFF</color>
+    <color name="theme_divider">#B6B6B6</color>
+
     <color name="colorPrimary">#fcba5e</color>
     <color name="colorPrimary2">#fff0db</color>
     <color name="colorPrimaryDark">#FF9800</color>
@@ -46,7 +67,7 @@
     <color name="accent_500">#E91E63</color>
     <!--Pink 700-->
     <color name="accent_700">#C2185B</color>
-    <color name="black_trans80">#00000000</color>
+    <color name="black_trans80">#ae000000</color>
 
 
     <color name="colorbg1">#ffb047</color>

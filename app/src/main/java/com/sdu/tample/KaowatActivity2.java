@@ -31,6 +31,7 @@ public class KaowatActivity2 extends AppCompatActivity {
     Context mContext;
 
     String[] id;
+    int idPro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +45,17 @@ public class KaowatActivity2 extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         mContext = this;
         id = getIntent().getExtras().getStringArray("id");
+        idPro = getIntent().getExtras().getInt("idPro");
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new ConnectAPI().getActivitiesSearch(KaowatActivity2.this,implode(", ", id));
+                new ConnectAPI().getActivitiesSearch(KaowatActivity2.this,implode(", ", id),idPro);
             }
         });
 
-
-
-        new ConnectAPI().getActivitiesSearch(KaowatActivity2.this,implode(", ", id));
+        new ConnectAPI().getActivitiesSearch(KaowatActivity2.this,implode(", ", id),idPro);
 //        Toast.makeText(KaowatActivity2.this, implode(", ", id), Toast.LENGTH_SHORT).show();
 
     }

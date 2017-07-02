@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/img"
-                android:src="@drawable/wat_1_1"
+                android:src="@drawable/nopic"
                 android:layout_margin="5dp"
                 android:scaleType="fitXY" />
 

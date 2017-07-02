@@ -1,6 +1,7 @@
 package com.sdu.tample;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -21,17 +22,17 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ConnectAPI {
-    String URL = "http://temple.hol.es";
-//    String URL = "http://192.168.1.50/temple/public";
+        String URL = "http://temple.ddnsking.com/temple/public";
+//    String URL = "http://192.168.1.52/temple/public";
 
-    public void getTempleAll(final Context mContext) {
+    public void getTempleAll(final Context mContext, final int ID) {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL+"/api/temple")
+                        .url(URL + "/api/province/temple/" + ID)
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
@@ -57,21 +58,65 @@ public class ConnectAPI {
                 String[] temp = string.split(" ");
                 if (temp[0].equals("Error") || temp[0].equals("Not")) {
                     dialogErrorNoIntent(mContext, string);
+                } else if (string.equals("[]")) {
+                    dialogNotfound(mContext);
                 } else {
-                    ((KaowatActivity) mContext).setAdap(string,URL);
+                    ((KaowatActivity) mContext).setAdap(string, URL);
                 }
             }
         }.execute();
     }
 
-    public void getTempleMap(final Context mContext, final GoogleMap mMap) {
+    public void getProvinceAll(final Context mContext) {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL+"/api/temple/map")
+                        .url(URL + "/api/province")
+                        .get()
+                        .addHeader("cache-control", "no-cache")
+                        .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
+                        .build();
+
+                try {
+                    Response response = client.newCall(request).execute();
+                    if (response.isSuccessful()) {
+                        return response.body().string();
+                    } else {
+                        return "Not Success - code : " + response.code();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return "Error - " + e.getMessage();
+                }
+            }
+
+            @Override
+            protected void onPostExecute(String string) {
+                super.onPostExecute(string);
+                Log.d("ConnectAPI : ", "getProvinceAll" + string);
+                String[] temp = string.split(" ");
+                if (temp[0].equals("Error") || temp[0].equals("Not")) {
+                    dialogErrorNoIntent(mContext, string);
+                } else if (string.equals("[]")) {
+                    dialogNotfound(mContext);
+                } else {
+                    ((ProvinceActivity) mContext).setAdap(string, URL);
+                }
+            }
+        }.execute();
+    }
+
+    public void getTempleMap(final Context mContext, final GoogleMap mMap, final int ID) {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... voids) {
+                OkHttpClient client = new OkHttpClient();
+
+                Request request = new Request.Builder()
+                        .url(URL + "/api/province/temple/map/" + ID)
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
@@ -97,9 +142,11 @@ public class ConnectAPI {
                 String[] temp = string.split(" ");
                 if (temp[0].equals("Error") || temp[0].equals("Not")) {
                     dialogErrorNoIntent(mContext, string);
+                } else if (string.equals("[]")) {
+                    dialogNotfound(mContext);
                 } else {
-                    ((MapWatActivity) mContext).addMarker(mMap,string,URL);
-                    ((MapWatActivity) mContext).setAdap(string,URL);
+                    ((MapWatActivity) mContext).addMarker(mMap, string, URL);
+                    ((MapWatActivity) mContext).setAdap(string, URL);
                 }
             }
         }.execute();
@@ -112,7 +159,7 @@ public class ConnectAPI {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL+"/api/vehicle/cat")
+                        .url(URL + "/api/vehicle/cat")
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
@@ -139,20 +186,20 @@ public class ConnectAPI {
                 if (temp[0].equals("Error") || temp[0].equals("Not")) {
                     dialogErrorNoIntent(mContext, string);
                 } else {
-                    ((VehicleCatActivity)mContext).setAdap(string,URL);
+                    ((VehicleCatActivity) mContext).setAdap(string, URL);
                 }
             }
         }.execute();
     }
 
-    public void getVehicleCatId(final Context mContext, final int id) {
+    public void getVehicleCatId(final Context mContext, final int id, final int idPro) {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL+"/api/vehicle/cat/"+id)
+                        .url(URL + "/api/province/vehicle/" + id + "/" + idPro)
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
@@ -178,8 +225,10 @@ public class ConnectAPI {
                 String[] temp = string.split(" ");
                 if (temp[0].equals("Error") || temp[0].equals("Not")) {
                     dialogErrorNoIntent(mContext, string);
+                } else if (string.equals("[]")) {
+                    dialogNotfound(mContext);
                 } else {
-                    ((VehicleActivity)mContext).setAdap(string,URL);
+                    ((VehicleActivity) mContext).setAdap(string, URL);
                 }
             }
         }.execute();
@@ -192,7 +241,7 @@ public class ConnectAPI {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL+"/api/vehicle")
+                        .url(URL + "/api/vehicle")
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
@@ -219,22 +268,22 @@ public class ConnectAPI {
                 if (temp[0].equals("Error") || temp[0].equals("Not")) {
                     dialogErrorNoIntent(mContext, string);
                 } else {
-                    ((VehicleActivity) mContext).setAdap(string,URL);
+                    ((VehicleActivity) mContext).setAdap(string, URL);
                 }
             }
         }.execute();
     }
 
-    public void getActivitiesSearch(final Context mContext, final String id) {
+    public void getActivitiesSearch(final Context mContext, final String id, final int idPro) {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
                 OkHttpClient client = new OkHttpClient();
 
                 MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-                RequestBody body = RequestBody.create(mediaType, "data="+id);
+                RequestBody body = RequestBody.create(mediaType, "data=" + id + "&province=" + idPro);
                 Request request = new Request.Builder()
-                        .url(URL+"/api/activities/search")
+                        .url(URL + "/api/province/activities/search")
                         .post(body)
                         .addHeader("content-type", "application/x-www-form-urlencoded")
                         .addHeader("cache-control", "no-cache")
@@ -261,21 +310,23 @@ public class ConnectAPI {
                 String[] temp = string.split(" ");
                 if (temp[0].equals("Error") || temp[0].equals("Not")) {
                     dialogErrorNoIntent(mContext, string);
+                } else if (string.equals("[]")) {
+                    dialogNotfound(mContext);
                 } else {
-                    ((KaowatActivity2) mContext).setAdap(string,URL);
+                    ((KaowatActivity2) mContext).setAdap(string, URL);
                 }
             }
         }.execute();
     }
 
-    public void getNewsAll(final Context mContext) {
+    public void getNewsAll(final Context mContext, final int ID) {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL+"/api/news")
+                        .url(URL + "/api/province/news/" + ID)
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
@@ -301,8 +352,10 @@ public class ConnectAPI {
                 String[] temp = string.split(" ");
                 if (temp[0].equals("Error") || temp[0].equals("Not")) {
                     dialogErrorNoIntent(mContext, string);
+                } else if (string.equals("[]")) {
+                    dialogNotfound(mContext);
                 } else {
-                    ((NewsActivity) mContext).setAdap(string,URL);
+                    ((NewsActivity) mContext).setAdap(string, URL);
                 }
             }
         }.execute();
@@ -315,7 +368,7 @@ public class ConnectAPI {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL + "/api/vehicle/"+id)
+                        .url(URL + "/api/vehicle/" + id)
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
@@ -355,7 +408,7 @@ public class ConnectAPI {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL + "/api/litanies/"+id)
+                        .url(URL + "/api/litanies/" + id)
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .build();
@@ -394,7 +447,7 @@ public class ConnectAPI {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL + "/api/news/"+id)
+                        .url(URL + "/api/news/" + id)
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
@@ -434,7 +487,7 @@ public class ConnectAPI {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL+"/api/quiz")
+                        .url(URL + "/api/quiz")
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
@@ -467,7 +520,7 @@ public class ConnectAPI {
         }.execute();
     }
 
-    public void getHotAll(final Context mContext, final GoogleMap mMap) {
+    public void getHotAll(final Context mContext, final GoogleMap mMap, final int ID) {
 
         new AsyncTask<Void, Void, String>() {
             @Override
@@ -475,7 +528,7 @@ public class ConnectAPI {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL+"/api/hot")
+                        .url(URL + "/api/province/hot/" + ID)
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
@@ -501,8 +554,10 @@ public class ConnectAPI {
                 String[] temp = string.split(" ");
                 if (temp[0].equals("Error") || temp[0].equals("Not")) {
                     dialogErrorNoIntent(mContext, string);
+                } else if (string.equals("[]")) {
+                    dialogNotfound(mContext);
                 } else {
-                    ((MapHotActivity) mContext).addMarker(mMap,string,URL);
+                    ((MapHotActivity) mContext).addMarker(mMap, string, URL);
                 }
             }
         }.execute();
@@ -516,7 +571,7 @@ public class ConnectAPI {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL+"/api/activities")
+                        .url(URL + "/api/activities")
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
@@ -549,14 +604,14 @@ public class ConnectAPI {
         }.execute();
     }
 
-    public void getImgTempleAll(final Context mContext) {
+    public void getImgTempleAll(final Context mContext, final int ID) {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL+"/api/temple/image")
+                        .url(URL + "/api/province/temple/image/" + ID)
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .build();
@@ -581,8 +636,10 @@ public class ConnectAPI {
                 String[] temp = string.split(" ");
                 if (temp[0].equals("Error") || temp[0].equals("Not")) {
                     dialogErrorNoIntent(mContext, string);
+                } else if (string.equals("[]")) {
+                    dialogNotfound2(mContext);
                 } else {
-                    ((MainActivity) mContext).setHeader(string,URL);
+                    ((MainActivity) mContext).setHeader(string, URL);
                 }
             }
         }.execute();
@@ -595,7 +652,7 @@ public class ConnectAPI {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL + "/api/temple/"+id)
+                        .url(URL + "/api/temple/" + id)
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .build();
@@ -635,7 +692,7 @@ public class ConnectAPI {
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
-                        .url(URL+"/api/temple")
+                        .url(URL + "/api/temple")
                         .get()
                         .addHeader("cache-control", "no-cache")
                         .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
@@ -662,7 +719,7 @@ public class ConnectAPI {
                 if (temp[0].equals("Error") || temp[0].equals("Not")) {
                     dialogErrorNoIntent(mContext, string);
                 } else {
-                    ((MapActivity) mContext).setAdap(string,URL);
+                    ((MapActivity) mContext).setAdap(string, URL);
                 }
             }
         }.execute();
@@ -724,4 +781,19 @@ public class ConnectAPI {
                 .setNegativeButton("OK", null)
                 .show();
     }
+
+    private static void dialogNotfound2(final Context mContext) {
+        new AlertDialog.Builder(mContext)
+                .setTitle("Not Found")
+                .setMessage("ไม่พบข้อมูล กรุณาลองใหม่ภายหลัง")
+                .setNegativeButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                        ((MainActivity)mContext).finish();
+                    }
+                })
+                .show();
+    }
+
 }

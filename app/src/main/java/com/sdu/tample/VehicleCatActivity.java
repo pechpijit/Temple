@@ -28,11 +28,15 @@ public class VehicleCatActivity extends AppCompatActivity {
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     Context mContext;
+    int idPro;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicle);
+
+        idPro = getIntent().getExtras().getInt("id");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -77,7 +81,7 @@ public class VehicleCatActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 int ID = posts.get(position).getId();
-                startActivity(new Intent(mContext, VehicleActivity.class).putExtra("id",ID));
+                startActivity(new Intent(mContext, VehicleActivity.class).putExtra("id",ID).putExtra("idPro",idPro));
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });

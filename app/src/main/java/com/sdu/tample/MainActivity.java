@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
@@ -33,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
     private SliderLayout mDemoSlider;
     HashMap<String, String> url_maps;
     Context mContext;
+    int ID;
+    String province;
+    TextView txt_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,13 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
+
+        ID = getIntent().getExtras().getInt("id");
+        province = getIntent().getExtras().getString("province");
+
+        txt_title = (TextView) findViewById(R.id.txt_title);
+        txt_title.setText(province);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mContext = this;
@@ -53,11 +65,10 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
         findViewById(R.id.btn_activities).setOnClickListener(this);
         findViewById(R.id.btn_quiz).setOnClickListener(this);
 
-        new ConnectAPI().getImgTempleAll(mContext);
+        new ConnectAPI().getImgTempleAll(mContext,ID);
     }
 
     public void setHeader(String string , String url) {
-
         SharedPreferences sp = getSharedPreferences("", MODE_PRIVATE);
         SharedPreferences.Editor edit = sp.edit();
         edit.putString("url", url);
@@ -122,27 +133,27 @@ public class MainActivity extends AppCompatActivity implements BaseSliderView.On
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_temple:
-                startActivity(new Intent(mContext,KaowatActivity.class));
+                startActivity(new Intent(mContext,KaowatActivity.class).putExtra("id",ID));
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 break;
             case R.id.btn_news:
-                startActivity(new Intent(mContext,NewsActivity.class));
+                startActivity(new Intent(mContext,NewsActivity.class).putExtra("id",ID));
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 break;
             case R.id.btn_map:
-                startActivity(new Intent(mContext,MapWatActivity.class));
+                startActivity(new Intent(mContext,MapWatActivity.class).putExtra("id",ID));
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 break;
             case R.id.btn_v:
-                startActivity(new Intent(mContext,VehicleCatActivity.class));
+                startActivity(new Intent(mContext,VehicleCatActivity.class).putExtra("id",ID));
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 break;
             case R.id.btn_activities:
-                startActivity(new Intent(mContext,ActivitiesActivity.class));
+                startActivity(new Intent(mContext,ActivitiesActivity.class).putExtra("id",ID));
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 break;
             case R.id.btn_quiz:
-                startActivity(new Intent(mContext,MapHotActivity.class));
+                startActivity(new Intent(mContext,MapHotActivity.class).putExtra("id",ID));
                 overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
                 break;
         }

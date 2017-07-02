@@ -28,7 +28,7 @@ import java.util.Collection;
 public class NewsActivity extends AppCompatActivity {
     SwipeRefreshLayout mSwipeRefreshLayout;
     Context mContext;
-
+    int ID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +36,9 @@ public class NewsActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_news);
+
+        ID = getIntent().getExtras().getInt("id");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -46,11 +49,11 @@ public class NewsActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new ConnectAPI().getNewsAll(NewsActivity.this);
+                new ConnectAPI().getNewsAll(NewsActivity.this,ID);
             }
         });
 
-        new ConnectAPI().getNewsAll(mContext);
+        new ConnectAPI().getNewsAll(mContext,ID);
     }
 
     public void setAdap(String data,String url) {

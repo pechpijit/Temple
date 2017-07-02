@@ -29,7 +29,7 @@ public class KaowatActivity extends AppCompatActivity {
 
     SwipeRefreshLayout mSwipeRefreshLayout;
     Context mContext;
-
+    int ID;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +37,9 @@ public class KaowatActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_kaowat);
+
+        ID = getIntent().getExtras().getInt("id");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
@@ -47,11 +50,11 @@ public class KaowatActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new ConnectAPI().getTempleAll(KaowatActivity.this);
+                new ConnectAPI().getTempleAll(KaowatActivity.this,ID);
             }
         });
 
-        new ConnectAPI().getTempleAll(KaowatActivity.this);
+        new ConnectAPI().getTempleAll(KaowatActivity.this,ID);
 
     }
 

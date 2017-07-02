@@ -18,11 +18,11 @@ public class SplashActivity extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                       startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                       startActivity(new Intent(SplashActivity.this,ProvinceActivity.class));
                         finish();
                         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                     }
-                }, 3000);
+                }, 2000);
 
     }
 }

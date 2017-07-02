@@ -166,12 +166,6 @@ public class DesVehicleActivity extends AppCompatActivity implements View.OnClic
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    public void onResume() {
-        super.onResume();
-
-        new ConnectAPI().getVehicleId(mContext, id);
-    }
-
     public void getScreenOrientation(String VechicleName) {
         String[] temp = VechicleName.split(" ");
         String name = VechicleName.substring(0, temp[0].length()) + "\n" +

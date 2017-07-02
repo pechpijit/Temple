@@ -103,6 +103,7 @@
     </string>
     <string name="title_activity_news">NewsActivity</string>
     <string name="title_activity_detail_news">DetailNewsActivity</string>
+    <string name="title_activity_province">ProvinceActivity</string>
 
 
 </resources>
