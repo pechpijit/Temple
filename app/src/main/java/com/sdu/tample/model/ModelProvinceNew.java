@@ -2,12 +2,9 @@ package com.sdu.tample.model;
 
 import java.util.ArrayList;
 
-/**
- * Created by Developer on 4/7/2560.
- */
 public class ModelProvinceNew {
     ModelProvince province;
-    ArrayList<ModelProvinceGallry> gallries;
+    ArrayList<ModelProvinceGallry> image;
 
     public ModelProvince getProvince() {
         return province;
@@ -17,11 +14,11 @@ public class ModelProvinceNew {
         this.province = province;
     }
 
-    public ArrayList<ModelProvinceGallry> getGallries() {
-        return gallries;
+    public ArrayList<ModelProvinceGallry> getImage() {
+        return image;
     }
 
-    public void setGallries(ArrayList<ModelProvinceGallry> gallries) {
-        this.gallries = gallries;
+    public void setImage(ArrayList<ModelProvinceGallry> image) {
+        this.image = image;
     }
 }

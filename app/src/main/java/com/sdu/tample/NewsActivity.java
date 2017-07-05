@@ -25,6 +25,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 public class NewsActivity extends AppCompatActivity {
     SwipeRefreshLayout mSwipeRefreshLayout;
     Context mContext;
@@ -87,6 +89,11 @@ public class NewsActivity extends AppCompatActivity {
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
             }
         });
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
 }

@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    tools:context="com.sdu.tample.KaowatActivity">
+    tools:context="com.sdu.tample.ProvinceActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -23,14 +24,32 @@
                 android:layout_height="?attr/actionBarSize"
                 android:background="@color/colorPrimary" />
 
-            <com.miguelcatalan.materialsearchview.MaterialSearchView
-                android:id="@+id/search_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_start_quiz"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                fancy:fb_iconPaddingRight="10dp"
+                fancy:fb_fontIconResource="&#xf002;"
+                fancy:fb_fontIconSize="30sp"
+                fancy:fb_iconPosition="left"
+                fancy:fb_defaultColor="@color/colorPrimary2"
+                fancy:fb_focusColor="@color/white"
+                fancy:fb_radius="10dp"
+                fancy:fb_text="ค้นหาจังหวัด"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                fancy:fb_textColor="@color/white"
+                android:layout_margin="5dp"
+                android:layout_gravity="center_horizontal" />
         </FrameLayout>
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_kaowat" />
+    <include layout="@layout/content_province" />
 
 </android.support.design.widget.CoordinatorLayout>
+

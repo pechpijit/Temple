@@ -156,16 +156,18 @@ public class MapWatActivity extends AppCompatActivity implements OnMapReadyCallb
     private Bitmap getMarkerBitmapFromView(final String url) {
 
         View customMarkerView = ((LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.view_marker, null);
-        final ImageView markerImageView = (ImageView) customMarkerView.findViewById(R.id.avatar_marker_image_view);
+        ImageView markerImageView = (ImageView) customMarkerView.findViewById(R.id.avatar_marker_image_view);
 
-        try {
-            URL UR = new URL(url);
-            Bitmap bmp = BitmapFactory.decodeStream(UR.openConnection().getInputStream());
-            markerImageView.setImageBitmap(bmp);
-        } catch (Exception e) {
-            Log.d("loadImage", e+"");
-        }
-
+//        try {
+//            URL UR = new URL(url);
+//            Bitmap bmp = BitmapFactory.decodeStream(UR.openConnection().getInputStream());
+//            markerImageView.setImageBitmap(bmp);
+//        } catch (Exception e) {
+//            Log.d("loadImage", e+"");
+//        }
+        Picasso.with(mContext).load(url).error(R.drawable.nopic).into(markerImageView);
+//        Picasso.with(mContext).load(url).error(R.drawable.nopic).into(markerImageView);
+        Glide.with(mContext).load(url).error(R.drawable.nopic).into(markerImageView);
         customMarkerView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
         customMarkerView.layout(0, 0, customMarkerView.getMeasuredWidth(), customMarkerView.getMeasuredHeight());
         customMarkerView.buildDrawingCache();

@@ -22,7 +22,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ConnectAPI {
-        String URL = "http://temple.ddnsking.com/temple/public";
+//        String URL = "http://temple.ddnsking.com/temple/public";
+        String URL = "http://temple.hol.es";
 //    String URL = "http://192.168.1.52/temple/public";
 
     public void getTempleAll(final Context mContext, final int ID) {
@@ -104,6 +105,48 @@ public class ConnectAPI {
                     dialogNotfound(mContext);
                 } else {
                     ((ProvinceActivity) mContext).setAdap(string, URL);
+                }
+            }
+        }.execute();
+    }
+
+    public void getProvinceSearchAll(final Context mContext, final String search) {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... voids) {
+                OkHttpClient client = new OkHttpClient();
+
+                Request request = new Request.Builder()
+                        .url(URL + "/api/province/search/"+search)
+                        .get()
+                        .addHeader("cache-control", "no-cache")
+                        .addHeader("postman-token", "a8bf0dca-f75d-ba16-329e-54be1d474ee0")
+                        .build();
+
+                try {
+                    Response response = client.newCall(request).execute();
+                    if (response.isSuccessful()) {
+                        return response.body().string();
+                    } else {
+                        return "Not Success - code : " + response.code();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    return "Error - " + e.getMessage();
+                }
+            }
+
+            @Override
+            protected void onPostExecute(String string) {
+                super.onPostExecute(string);
+                Log.d("ConnectAPI : ", "getProvinceAll" + string);
+                String[] temp = string.split(" ");
+                if (temp[0].equals("Error") || temp[0].equals("Not")) {
+                    //dialogErrorNoIntent(mContext, string);
+                } else if (string.equals("[]")) {
+                    //dialogNotfound(mContext);
+                } else {
+                    ((ProvinceSearchActivity) mContext).setAdap(string, URL);
                 }
             }
         }.execute();

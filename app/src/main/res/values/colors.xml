@@ -21,8 +21,9 @@
     <color name="theme_icons">#FFFFFF</color>
     <color name="theme_divider">#B6B6B6</color>
 
-    <color name="colorPrimary">#fcba5e</color>
-    <color name="colorPrimary2">#fff0db</color>
+    <color name="colorPrimary">#f7a11a</color>
+    <color name="colorPrimary2">#f2dda2</color>
+    <color name="background">#f2dda2</color>
     <color name="colorPrimaryDark">#FF9800</color>
     <color name="colorAccent">#FF5722</color>
 

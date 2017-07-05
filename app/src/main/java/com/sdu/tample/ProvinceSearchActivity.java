@@ -3,70 +3,89 @@ package com.sdu.tample;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.speech.RecognizerIntent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import com.sdu.tample.adapter.AdapterProvince;
-import com.sdu.tample.model.ModelProvince;
 import com.sdu.tample.model.ModelProvinceNew;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import mehdi.sakout.fancybuttons.FancyButton;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class ProvinceActivity extends AppCompatActivity {
-    SwipeRefreshLayout mSwipeRefreshLayout;
+public class ProvinceSearchActivity extends AppCompatActivity {
     Context mContext;
     ArrayList<ModelProvinceNew> posts;
-    FancyButton btn_start_quiz;
+    EditText input_province;
+    ProgressBar progressBar;
+    RecyclerView recyclerView;
+    TextView txt_back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_province);
-        btn_start_quiz = (FancyButton) findViewById(R.id.btn_start_quiz);
-        btn_start_quiz.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ProvinceActivity.this,ProvinceSearchActivity.class));
-                overridePendingTransition(R.anim.fade_in,R.anim.fade_out);
-            }
-        });
-
+        setContentView(R.layout.activity_province_search);
         mContext = this;
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        recyclerView = (RecyclerView) findViewById(R.id.dummyfrag_scrollableview);
+        txt_back = (TextView) findViewById(R.id.txt_back);
 
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        progressBar.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.INVISIBLE);
+        txt_back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRefresh() {
-                new ConnectAPI().getProvinceAll(ProvinceActivity.this);
+            public void onClick(View view) {
+                finish();
             }
         });
 
-        new ConnectAPI().getProvinceAll(mContext);
+
+
+        input_province = (EditText) findViewById(R.id.input_province);
+        input_province.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                progressBar.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.INVISIBLE);
+                new ConnectAPI().getProvinceSearchAll(mContext,charSequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
     public void setAdap(String data, String url) {
+
+        progressBar.setVisibility(View.INVISIBLE);
+        recyclerView.setVisibility(View.VISIBLE);
 
         Gson gson = new Gson();
         Type collectionType = new TypeToken<Collection<ModelProvinceNew>>() {}.getType();
@@ -87,12 +106,6 @@ public class ProvinceActivity extends AppCompatActivity {
         AdapterProvince adapter = new AdapterProvince(this, posts, url);
         recyclerView.setAdapter(adapter);
 
-        try {
-            mSwipeRefreshLayout.setRefreshing(false);
-        } catch (Exception e) {
-
-        }
-
         adapter.SetOnItemClickListener(new AdapterProvince.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -104,7 +117,6 @@ public class ProvinceActivity extends AppCompatActivity {
         });
 
     }
-
 
     @Override
     protected void attachBaseContext(Context newBase) {

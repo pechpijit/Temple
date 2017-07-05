@@ -39,7 +39,7 @@ public class AdapterListKaowat extends RecyclerView.Adapter<AdapterListKaowat.Ve
         versionViewHolder.txt_name.setText(posts.get(i).getTempleName());
 
         try {
-            versionViewHolder.txt_desc.setText("\t" + posts.get(i).getTempleDetail().substring(0, 20) + "...");
+            versionViewHolder.txt_desc.setText("\t" + posts.get(i).getTempleDetail().substring(0, 40) + "...");
         } catch (Exception e) {
 
         }

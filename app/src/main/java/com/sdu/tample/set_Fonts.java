@@ -10,7 +10,7 @@ public class set_Fonts extends Application {
         super.onCreate();
 
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/charm2.ttf")
+                .setDefaultFontPath("fonts/charm.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build());
     }

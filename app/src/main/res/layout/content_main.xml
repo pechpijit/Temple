@@ -55,7 +55,7 @@
                             android:id="@+id/textView2"
                             android:layout_gravity="center_horizontal"
                             android:textStyle="bold"
-                            android:textSize="24dp"
+                            android:textSize="25dp"
                             android:layout_marginTop="3dp"
                             android:textColor="@color/menu2" />
                     </LinearLayout>
@@ -80,7 +80,7 @@
                             android:id="@+id/textView3"
                             android:layout_gravity="center_horizontal"
                             android:textStyle="bold"
-                            android:textSize="24dp"
+                            android:textSize="25dp"
                             android:layout_marginTop="3dp"
                             android:textColor="@color/menu2" />
                     </LinearLayout>
@@ -112,7 +112,7 @@
                             android:id="@+id/textView4"
                             android:layout_gravity="center_horizontal"
                             android:textStyle="bold"
-                            android:textSize="24dp"
+                            android:textSize="25dp"
                             android:layout_marginTop="3dp"
                             android:textColor="@color/menu2" />
                     </LinearLayout>
@@ -137,7 +137,7 @@
                             android:id="@+id/textView5"
                             android:layout_gravity="center_horizontal"
                             android:textStyle="bold"
-                            android:textSize="24dp"
+                            android:textSize="25dp"
                             android:layout_marginTop="3dp"
                             android:textColor="@color/menu2" />
                     </LinearLayout>
@@ -169,7 +169,7 @@
                             android:id="@+id/textView6"
                             android:layout_gravity="center_horizontal"
                             android:textStyle="bold"
-                            android:textSize="24dp"
+                            android:textSize="25dp"
                             android:layout_marginTop="3dp"
                             android:textColor="@color/menu2" />
                     </LinearLayout>
@@ -194,7 +194,7 @@
                             android:id="@+id/textView7"
                             android:layout_gravity="center_horizontal"
                             android:textStyle="bold"
-                            android:textSize="24dp"
+                            android:textSize="25dp"
                             android:layout_marginTop="3dp"
                             android:textColor="@color/menu2" />
                     </LinearLayout>

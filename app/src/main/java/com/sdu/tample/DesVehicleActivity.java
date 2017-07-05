@@ -173,10 +173,10 @@ public class DesVehicleActivity extends AppCompatActivity implements View.OnClic
 
         Display screenOrientation = getWindowManager().getDefaultDisplay();
         if (screenOrientation.getWidth() == screenOrientation.getHeight()) {
-            txt_title.setText(name);
+            txt_title.setText(VechicleName);
         } else {
             if (screenOrientation.getWidth() < screenOrientation.getHeight()) {
-                txt_title.setText(name);
+                txt_title.setText(VechicleName);
             } else {
                 txt_title.setText(VechicleName);
             }

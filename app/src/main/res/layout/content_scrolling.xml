@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".DetailVehicleActivity"
-    tools:showIn="@layout/activity_scrolling">
+    tools:showIn="@layout/activity_scrolling"
+    android:background="@color/colorPrimary2">
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -48,7 +49,7 @@
                     android:layout_margin="5dp"
                     android:text="ติดต่อ"
                     android:textColor="@color/menu2"
-                    android:textSize="18dp"
+                    android:textSize="24dp"
                     android:textStyle="bold" />
 
                 <TextView
