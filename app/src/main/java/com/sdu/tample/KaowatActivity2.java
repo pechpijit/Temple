@@ -51,12 +51,12 @@ public class KaowatActivity2 extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                new ConnectAPI().getActivitiesSearch(KaowatActivity2.this,implode(", ", id),idPro);
+                new ConnectAPI().getActivitiesSearch(KaowatActivity2.this,implode(",", id),idPro);
             }
         });
 
-        new ConnectAPI().getActivitiesSearch(KaowatActivity2.this,implode(", ", id),idPro);
-//        Toast.makeText(KaowatActivity2.this, implode(", ", id), Toast.LENGTH_SHORT).show();
+        new ConnectAPI().getActivitiesSearch(KaowatActivity2.this,implode(",", id),idPro);
+        Toast.makeText(KaowatActivity2.this, implode(",", id), Toast.LENGTH_SHORT).show();
 
     }
 

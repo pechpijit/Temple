@@ -69,7 +69,7 @@ public class ActivitiesActivity extends AppCompatActivity {
                         index++;
                     }
                 }
-//                Toast.makeText(ActivitiesActivity.this, ""+ Arrays.toString(search), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ActivitiesActivity.this, ""+ Arrays.toString(search), Toast.LENGTH_SHORT).show();
                 sum = 0;
                 index = 0;
 
